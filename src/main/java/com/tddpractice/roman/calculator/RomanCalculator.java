@@ -3,25 +3,31 @@ package com.tddpractice.roman.calculator;
 import java.math.BigInteger;
 
 public class RomanCalculator implements IRomanCalculator {
+	
+	IConverterUtil converter = null;
+	
+	public RomanCalculator(IConverterUtil util) {
+		this.converter = util;
+	}
 
 	@Override
 	public String add(String operands) throws Exception {
 		String[] romanNums = operands.split(",");
 		int result = 0;
 		for (int i = 0; i < romanNums.length; i++) {
-			result = result + ConverterUtil.convertToNumber(romanNums[i]);
+			result = result + converter.convertToNumber(romanNums[i]);
 		}
-		return ConverterUtil.convertToRoman(result);
+		return converter.convertToRoman(result);
 	}
 
 	@Override
 	public String subtract(String operands) throws Exception {
 		String[] romanNums = operands.split(",");
-		int result = ConverterUtil.convertToNumber(romanNums[0]);
+		int result = converter.convertToNumber(romanNums[0]);
 		for (int i = 1; i < romanNums.length; i++) {
-			result = result - ConverterUtil.convertToNumber(romanNums[i]);
+			result = result - converter.convertToNumber(romanNums[i]);
 		}
-		return ConverterUtil.convertToRoman(result);
+		return converter.convertToRoman(result);
 	}
 
 	@Override
@@ -29,29 +35,29 @@ public class RomanCalculator implements IRomanCalculator {
 		String[] romanNums = operands.split(",");
 		int result = 1;
 		for (int i = 0; i < romanNums.length; i++) {
-			result = result * ConverterUtil.convertToNumber(romanNums[i]);
+			result = result * converter.convertToNumber(romanNums[i]);
 		}
-		return ConverterUtil.convertToRoman(result);
+		return converter.convertToRoman(result);
 	}
 
 	@Override
 	public String divide(String operands) throws Exception {
 		String[] romanNums = operands.split(",");
-		Integer quotient = ConverterUtil.convertToNumber(romanNums[0]);
+		Integer quotient = converter.convertToNumber(romanNums[0]);
 		Integer divisor = 1;
 		Integer remainder = 0;
 		for (int i = 1; i < romanNums.length; i++) {
-			divisor = divisor * ConverterUtil.convertToNumber(romanNums[i]);
+			divisor = divisor * converter.convertToNumber(romanNums[i]);
 		}
 		remainder = quotient % divisor;
 		quotient = quotient / divisor;
 		String result = "";
         int gcd = findGCD(divisor, remainder);
 		if (remainder == 0)
-			result = ConverterUtil.convertToRoman(quotient);
+			result = converter.convertToRoman(quotient);
 		else {
-			result = ConverterUtil.convertToRoman(quotient) + " (" + ConverterUtil.convertToRoman(remainder/gcd) + "/"
-					+ ConverterUtil.convertToRoman(divisor/gcd) + ")";
+			result = converter.convertToRoman(quotient) + " (" + converter.convertToRoman(remainder/gcd) + "/"
+					+ converter.convertToRoman(divisor/gcd) + ")";
 		}
 
 		return result;
@@ -65,13 +71,7 @@ public class RomanCalculator implements IRomanCalculator {
 	}
 
 	public static void main(String args[]) {
-		RomanCalculator calc = new RomanCalculator();
-		try {
-			System.out.println(calc.divide("XX,III,II"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 	}
 
 }

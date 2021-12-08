@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import com.tddpractice.roman.calculator.ConverterUtil;
 import com.tddpractice.roman.calculator.RomanCalculator;
 
 
@@ -21,7 +22,7 @@ public class CalculatorEndpoint {
 	public Response add(@QueryParam("operands") String operands) {
 		String result = "";
 		ResponseBuilder responseBuilder = Response.noContent();
-		RomanCalculator calculator = new RomanCalculator();
+		RomanCalculator calculator = new RomanCalculator(new ConverterUtil());
 		try {
 			result = calculator.add(operands);
 		} catch (Exception iae) {
@@ -37,7 +38,7 @@ public class CalculatorEndpoint {
 	public Response subtract(@QueryParam("operands") String operands) {
 		String result = "";
 		ResponseBuilder responseBuilder = Response.noContent();
-		RomanCalculator calculator = new RomanCalculator();
+		RomanCalculator calculator = new RomanCalculator(new ConverterUtil());
 		try {
 			result = calculator.subtract(operands);
 		} catch (Exception iae) {
@@ -53,7 +54,7 @@ public class CalculatorEndpoint {
 	public Response multiply(@QueryParam("operands") String operands) {
 		String result = "";
 		ResponseBuilder responseBuilder = Response.noContent();
-		RomanCalculator calculator = new RomanCalculator();
+		RomanCalculator calculator = new RomanCalculator(new ConverterUtil());
 		try {
 			result = calculator.multiply(operands);
 		} catch (Exception iae) {
@@ -69,7 +70,7 @@ public class CalculatorEndpoint {
 	public Response divide(@QueryParam("operands") String operands) {
 		String result = "";
 		ResponseBuilder responseBuilder = Response.noContent();
-		RomanCalculator calculator = new RomanCalculator();
+		RomanCalculator calculator = new RomanCalculator(new ConverterUtil());
 		try {
 			result = calculator.divide(operands);
 		} catch (Exception iae) {
