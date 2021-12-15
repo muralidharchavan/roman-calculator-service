@@ -1,4 +1,4 @@
-package com.tdd.practice.pact.consumer;
+package com.tddpractice.pact.consumer;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -26,7 +26,7 @@ import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 
 @ExtendWith(PactConsumerTestExt.class)
-@PactTestFor(providerName = "converter",port = "1234",pactVersion = PactSpecVersion.V3)
+@PactTestFor(providerName = "converter-bk",port = "1234",pactVersion = PactSpecVersion.V3)
 public class ConverterConsumerPactTest {
 	
 	private Map<String, String> headers = MapUtils.putAll(new HashMap<>(), new String[] {
@@ -39,8 +39,9 @@ public class ConverterConsumerPactTest {
 	    assertThat(mockServer, is(notNullValue()));
 	  }
 	
-    @Pact(consumer="calculator")
+    @Pact(consumer="calculator-bk")
     public RequestResponsePact convertToNumber(PactDslWithProvider builder) {
+    	System.out.println("Generating pact file...");
         return builder
         	      .given("roman numeral")
         	      .uponReceiving("convert to number")
@@ -60,6 +61,7 @@ public class ConverterConsumerPactTest {
     @PactTestFor(pactMethod = "convertToNumber")
     void test(MockServer mockServer) throws IOException {
       ClassicHttpResponse httpResponse =  (ClassicHttpResponse) Request.get(mockServer.getUrl() + "/to-number?value=III").execute().returnResponse();
+      System.out.println("Running consumer test success...");
       assertThat(httpResponse.getCode(), is(equalTo(200)));
       assertThat(IOUtils.toString(httpResponse.getEntity().getContent()),
         is(equalTo("3")));

@@ -87,6 +87,24 @@
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
+				<groupId>au.com.dius.pact.provider</groupId>
+				<artifactId>maven</artifactId>
+				<version>4.3.1</version>
+				<configuration>
+					<pactBrokerUrl>http://pact-broker.tools/</pactBrokerUrl>
+					<skipPactPublish>false</skipPactPublish> <!-- Defaults to false -->
+				</configuration>
+				<executions>
+					<execution>
+						<id>publish-pacts</id>
+						<phase>install</phase>
+						<goals>
+							<goal>publish</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.3.1</version>
